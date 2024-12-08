@@ -1,36 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Graph from "../components/Graph";
 import DateTimePicker from "../components/DateTimePicker";
 import DataList from "../components/DataList";
 import Navbar from "../components/Navbar";
 
+import { format } from 'date-fns';
+
 const WattPage = () => {
   const [filteredData, setFilteredData] = useState([]);
-  const [originalData, setOriginalData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetch("https://663eff83e3a7c3218a4bce87.mockapi.io/data/v1/data", {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((json) => setOriginalData(json[0].data));
-  }, []);
+  const fetchDataWithRange = async (start, end) => {
+    if (!start || !end) {
+      alert("Please provide both start and end datetime.");
+      return;
+    }
 
-  const filterData = (start, end) => {
-    const filtered = originalData.filter((item) => {
-      const date = new Date(item.datetime);
-      return date >= start && date <= end;
-    });
-    console.log(filtered)
-    setFilteredData(filtered);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/data-range?start=${start}&end=${end}`, {
+          mode: "no-cors"
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data from the server.");
+      }
+
+      const data = await response.json();
+
+      // Format datetime for display
+      const formattedData = data.map((item) => ({
+        ...item,
+        datetime: format(new Date(item.datetime), 'yyyy-MM-dd HH:mm:ss'), // Local time formatting
+      }));
+
+      setFilteredData(formattedData);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="p-4">
-      <Navbar/>
-      <DateTimePicker onFilter={filterData} />
-      <Graph data={filteredData} type="Watt" />
-      <DataList data={filteredData} type="Watt" />
+      <Navbar />
+      <DateTimePicker onFilter={(start, end) => fetchDataWithRange(start, end)} />
+      {loading && <p>Loading data...</p>}
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+      {filteredData.length > 0 ? (
+        <>
+          <Graph data={filteredData} type="Watt" />
+          <DataList data={filteredData} type="Watt" />
+        </>
+      ) : (
+        !loading && <p>No data available for the selected range.</p>
+      )}
     </div>
   );
 };

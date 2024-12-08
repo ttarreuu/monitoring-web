@@ -8,7 +8,13 @@ const DateTimePicker = ({ onFilter }) => {
     if (startDate && endDate) {
       const start = new Date(startDate);
       const end = new Date(endDate);
-      onFilter(start, end);
+
+      const formattedStart = start.toISOString();
+      const formattedEnd = end.toISOString();
+
+      onFilter(formattedStart, formattedEnd);
+      console.log("Formatted Start:", formattedStart);
+      console.log("Formatted End:", formattedEnd);
     }
   };
 
