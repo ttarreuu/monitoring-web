@@ -3,8 +3,7 @@ import Graph from "../components/Graph";
 import DateTimePicker from "../components/DateTimePicker";
 import DataList from "../components/DataList";
 import Navbar from "../components/Navbar";
-
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 const WattPage = () => {
   const [filteredData, setFilteredData] = useState([]);
@@ -12,19 +11,12 @@ const WattPage = () => {
   const [error, setError] = useState(null);
 
   const fetchDataWithRange = async (start, end) => {
-    if (!start || !end) {
-      alert("Please provide both start and end datetime.");
-      return;
-    }
-
     setLoading(true);
     setError(null);
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/data-range?start=${start}&end=${end}`, {
-          mode: "no-cors"
-        }
+        `http://localhost:3000/api/data-range?start=${start}&end=${end}`
       );
 
       if (!response.ok) {
@@ -33,10 +25,9 @@ const WattPage = () => {
 
       const data = await response.json();
 
-      // Format datetime for display
       const formattedData = data.map((item) => ({
         ...item,
-        datetime: format(new Date(item.datetime), 'yyyy-MM-dd HH:mm:ss'), // Local time formatting
+        datetime: format(new Date(item.datetime), "yyyy-MM-dd HH:mm:ss"),
       }));
 
       setFilteredData(formattedData);
@@ -50,7 +41,7 @@ const WattPage = () => {
   return (
     <div className="p-4">
       <Navbar />
-      <DateTimePicker onFilter={(start, end) => fetchDataWithRange(start, end)} />
+      <DateTimePicker onFilter={fetchDataWithRange} />
       {loading && <p>Loading data...</p>}
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
       {filteredData.length > 0 ? (
