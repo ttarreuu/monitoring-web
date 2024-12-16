@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const DataList = ({ type, data }) => {
     return (
@@ -8,16 +8,14 @@ const DataList = ({ type, data }) => {
             <thead>
             <tr className="bg-gray-200">
                 <th className="border border-gray-300 px-4 py-2 text-left">Datetime</th>
-                <th className="border border-gray-300 px-4 py-2 text-left">{type}</th>
+                <th className="border border-gray-300 px-4 py-2 text-left">{type.charAt(0).toUpperCase() + type.slice(1)}</th>
             </tr>
             </thead>
             <tbody>
             {data.map((item, index) => (
                 <tr key={index} className="odd:bg-white even:bg-gray-100">
                 <td className="border border-gray-300 px-4 py-2">{item.datetime}</td>
-                <td className="border border-gray-300 px-4 py-2">{item.volt}</td>
-                <td className="border border-gray-300 px-4 py-2">{item.watt}</td>
-                <td className="border border-gray-300 px-4 py-2">{item.ampere}</td>
+                <td className="border border-gray-300 px-4 py-2">{item[type]}</td>
                 </tr>
             ))}
             </tbody>

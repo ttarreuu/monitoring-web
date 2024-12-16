@@ -35,7 +35,7 @@ const Graph = ({ data, type }) => {
   const chartOptions = {
     responsive: true,
     plugins: {
-      legend: { display: false },
+      legend: { display: false},
       //title: {
         //display: true,
         //text: `${type.charAt(0).toUpperCase() + type.slice(1)} Graph`,

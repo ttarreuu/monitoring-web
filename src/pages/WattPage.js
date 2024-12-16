@@ -26,7 +26,7 @@ const WattPage = () => {
       const data = await response.json();
 
       const formattedData = data.map((item) => ({
-        ...item,
+        watt: item.watt,
         datetime: format(new Date(item.datetime), "yyyy-MM-dd HH:mm:ss"),
       }));
 
@@ -46,8 +46,8 @@ const WattPage = () => {
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
       {filteredData.length > 0 ? (
         <>
-          <Graph data={filteredData} type="Watt" />
-          <DataList data={filteredData} type="Watt" />
+          <Graph data={filteredData} type="watt" />
+          <DataList data={filteredData} type="watt" />
         </>
       ) : (
         !loading && <p>No data available for the selected range.</p>
