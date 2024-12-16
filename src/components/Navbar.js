@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Navbar() {
+  const location = useLocation();  
+
   return (
     <div>
       <header>
@@ -22,9 +24,12 @@ function Navbar() {
                 <li>
                   <Link to="/">
                     <a
-                      href="/"
-                      className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-600 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                      aria-current="page"
+                      className={`block py-2 pr-4 pl-3 ${
+                        location.pathname === '/' 
+                          ? 'text-blue-600 border-b-2 border-blue-600' 
+                          : 'text-gray-700 border-b border-gray-100'
+                      } hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-600 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700`}
+                      aria-current={location.pathname === '/' ? 'page' : undefined}
                     >
                       Real-Time
                     </a>
@@ -32,14 +37,28 @@ function Navbar() {
                 </li>
                 <li>
                   <Link to="/watt">
-                    <a className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-600 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                    <a
+                      className={`block py-2 pr-4 pl-3 ${
+                        location.pathname === '/watt' 
+                          ? 'text-blue-600 border-b-2 border-blue-600' 
+                          : 'text-gray-700 border-b border-gray-100'
+                      } hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-600 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700`}
+                      aria-current={location.pathname === '/watt' ? 'page' : undefined}
+                    >
                       Watt
                     </a>
                   </Link>
                 </li>
                 <li>
                   <Link to="/ampere">
-                    <a className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-600 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                    <a
+                      className={`block py-2 pr-4 pl-3 ${
+                        location.pathname === '/ampere' 
+                          ? 'text-blue-600 border-b-2 border-blue-600' 
+                          : 'text-gray-700 border-b border-gray-100'
+                      } hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-600 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700`}
+                      aria-current={location.pathname === '/ampere' ? 'page' : undefined}
+                    >
                       Ampere
                     </a>
                   </Link>
@@ -47,8 +66,12 @@ function Navbar() {
                 <li>
                   <Link to="/voltage">
                     <a
-                      href="/voltage"
-                      className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-600 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+                      className={`block py-2 pr-4 pl-3 ${
+                        location.pathname === '/voltage' 
+                          ? 'text-blue-600 border-b-2 border-blue-600' 
+                          : 'text-gray-700 border-b border-gray-100'
+                      } hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-600 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700`}
+                      aria-current={location.pathname === '/voltage' ? 'page' : undefined}
                     >
                       Voltage
                     </a>
