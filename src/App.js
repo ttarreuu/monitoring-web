@@ -1,137 +1,70 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from './components/Navbar';
-import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  LineElement,
-  PointElement, 
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-
-ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
+import React, { useEffect, useState } from "react";
+import Navbar from "./components/Navbar";
 
 const App = () => {
-  const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [
-      {
-        label: 'Watt',
-        data: [],
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 2,
-        fill: true, // Fill area under the line
-      },
-    ],
-  });
+  const [topData, setTopData] = useState(null);
 
-  const [avgWatt, setAvgWatt] = useState(0);
-  const [startDateTime, setStartDateTime] = useState('');
-  const [endDateTime, setEndDateTime] = useState('');
-  
   useEffect(() => {
-    fetch('https://663eff83e3a7c3218a4bce87.mockapi.io/data/v1/data')
-      .then((response) => response.json())
-      .then((data) => {
-        if (data && data.length > 0) {
-          const dataItem = data[0]; 
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/data");
+        const result = await response.json();
 
-          const labels = dataItem.data.map(item => item.datetime);
-          const dataPoints = dataItem.data.map(item => item.watt);
-          setAvgWatt(dataItem['avg-watt']);
-
-          setChartData({
-            labels: labels,
-            datasets: [
-              {
-                label: 'Watt',
-                data: dataPoints,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2,
-                fill: true, 
-              },
-            ],
-          });
-        } else {
-          console.error('No data available');
+        if (result.length > 0) {
+          setTopData(result[0]); 
         }
-      })
-      .catch((error) => console.error('Error fetching data:', error));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 1000); 
+
+    return () => clearInterval(interval); 
   }, []);
 
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'Datetime',
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: 'Watt',
-        },
-        beginAtZero: true,
-      },
-    },
-    layout: {
-      padding: {
-        top: 0, 
-        left: 10,
-        right: 10,
-        bottom: 0,
-      },
-    },
-  };
-
   return (
-    <div className="App fixed w-full h-full bg-gray-100 pt-14 pb-8"> 
-      <Navbar />
-      <div className="h-screen w-2/3 bg-white shadow dark:bg-gray-800 p-4 md:p-6 ml-4 mt-2">
-        <div className="flex space-x-4">
-            <div className="flex flex-col w-1/2">
-              <label className="block text-gray-700 dark:text-gray-300">Start Date & Time</label>
-              <input
-                type="datetime-local"
-                name="startDateTime"
-                value={startDateTime}
-                onChange={(e) => setStartDateTime(e.target.value)}
-                className="border border-gray-300 rounded-lg p-2"
-              />
-            </div>
-            <div className="flex flex-col w-1/2">
-              <label className="block text-gray-700 dark:text-gray-300">End Date & Time</label>
-              <input
-                type="datetime-local"
-                name="endDateTime"
-                value={endDateTime}
-                onChange={(e) => setEndDateTime(e.target.value)}
-                className="border border-gray-300 rounded-lg p-2"
-              />
-            </div>
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center space-y-4">
+      <h1 className="text-3xl font-bold mb-8 text-center">Real-Time Data</h1>
+      <Navbar/>
+      {topData ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-4xl">
+          {/* Volt Card */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4 text-center">Volt</h2>
+            <p className="text-2xl font-bold text-gray-800 text-center">
+              {topData.volt.toFixed(2)} V
+            </p>
           </div>
-        <div className="flex justify-between">
-          <div>
-            <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-white mt-4">${avgWatt.toLocaleString()}</h5>
-            <p className="text-base font-normal text-gray-500 dark:text-gray-400">Average Watt</p>
-          </div>
-        </div>
 
-        {/* Chart component */}
-        <div id="data-series-chart">
-          <Line data={chartData} options={options} />
+          {/* Ampere Card */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4 text-center">Ampere</h2>
+            <p className="text-2xl font-bold text-gray-800 text-center">
+              {topData.ampere.toFixed(2)} A
+            </p>
+          </div>
+
+          {/* Watt Card */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4 text-center">Watt</h2>
+            <p className="text-2xl font-bold text-gray-800 text-center">
+              {topData.watt.toFixed(2)} W
+            </p>
+          </div>
+
+          {/* Watt-Hours Card */}
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4 text-center">Watt-Hours</h2>
+            <p className="text-2xl font-bold text-gray-800 text-center">
+              {topData.watthours.toFixed(2)} Wh
+            </p>
+          </div>
         </div>
-      </div>
+      ) : (
+        <p className="text-center text-gray-500">Loading data...</p>
+      )}
     </div>
   );
 };
