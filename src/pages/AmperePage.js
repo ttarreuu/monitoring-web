@@ -16,7 +16,7 @@ const AmperePage = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/data-range?start=${start}&end=${end}`
+        `https://test.pantausolarpanel.com/api/data-range?start=${start}&end=${end}`
       );
 
       if (!response.ok) {

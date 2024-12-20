@@ -7,7 +7,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/data");
+        const response = await fetch("https://test.pantausolarpanel.com/api/data");
         const result = await response.json();
 
         if (result.length > 0) {
@@ -34,7 +34,7 @@ const App = () => {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold mb-4 text-center">Volt</h2>
             <p className="text-2xl font-bold text-gray-800 text-center">
-              {topData.volt.toFixed(2)} V
+              {topData.volt} V
             </p>
           </div>
 
@@ -42,7 +42,7 @@ const App = () => {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold mb-4 text-center">Ampere</h2>
             <p className="text-2xl font-bold text-gray-800 text-center">
-              {topData.ampere.toFixed(2)} A
+              {topData.ampere} A
             </p>
           </div>
 
@@ -50,7 +50,7 @@ const App = () => {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold mb-4 text-center">Watt</h2>
             <p className="text-2xl font-bold text-gray-800 text-center">
-              {topData.watt.toFixed(2)} W
+              {topData.watt} W
             </p>
           </div>
 
@@ -58,7 +58,7 @@ const App = () => {
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold mb-4 text-center">Watt-Hours</h2>
             <p className="text-2xl font-bold text-gray-800 text-center">
-              {topData.watthours.toFixed(2)} Wh
+              {topData.wattHours} Wh
             </p>
           </div>
         </div>

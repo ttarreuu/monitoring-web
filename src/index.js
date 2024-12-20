@@ -9,7 +9,6 @@ import VoltagePage from './pages/VoltagePage';
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
 } from "react-router-dom";
 
 const router = createBrowserRouter([
