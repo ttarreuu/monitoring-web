@@ -7,7 +7,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://test.pantausolarpanel.com/api/data");
+        const response = await fetch("http://localhost:3000/api/data");
         const result = await response.json();
 
         if (result.length > 0) {
