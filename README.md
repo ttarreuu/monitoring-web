@@ -1,27 +1,17 @@
-# 🌞 Pantausolarpanel.com – Real-Time Solar Energy Monitoring Website
-
-**Live Site:** [pantausolarpanel.com](https://pantausolarpanel.com)  
-**Repository:** [GitHub - monitoring-web](https://github.com/ttarreuu/monitoring-web)
-
-## 🔧 Project Overview
+# Real-Time Solar Energy Monitoring Website
 
 **Pantausolarpanel.com** is a responsive and interactive web platform for monitoring solar energy metrics in real time. It visualizes data such as voltage, current, and power through dynamic dashboards, helping users optimize solar panel performance.
 
 Originally developed as part of a final-year research project, this website focuses on frontend development and data visualization, integrating real-time data through RESTful APIs.
 
-## 🧑‍💻 Role
+## Features
 
-**Frontend Developer**  
-**Timeline:** February 2024 – January 2025
+- Real-time data display (voltage, current, power)
+- Interactive and responsive dashboard
+- Web access across desktop and mobile devices
+- Live updates via REST API integration
 
-## 🧩 Features
-
-- 🔴 Real-time data display (voltage, current, power)
-- 📊 Interactive and responsive dashboard
-- 🌐 Web access across desktop and mobile devices
-- ⚡ Live updates via REST API integration
-
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
 - [React.js](https://reactjs.org/)
@@ -32,22 +22,7 @@ Originally developed as part of a final-year research project, this website focu
 - [Express.js](https://expressjs.com/)
 - [Node.js](https://nodejs.org/)
 
-## 🚀 Getting Started
+## Screenshots
 
-Follow these steps to run the project locally:
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/ttarreuu/monitoring-web.git
-
-# 2. Navigate into the project directory
-cd monitoring-web
-
-# 3. Install dependencies
-npm install
-
-# 4. Start the development server
-npm run dev
-
-# 5. Open in your browser
-http://localhost:3000
+## Access the Website
+Visit: [pantausolarpanel.com](http://pantausolarpanel.com) *(currently solar panel under maintenance)*
